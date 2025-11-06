@@ -10,7 +10,7 @@ if (!BOT_TOKEN) {
   process.exit(1);
 }
 
-const bot = new Telegraf(BOT_TOKEN);
+const bot = new Telegraf(8490375470:AAGpuHaX37fEKmpEU--Kx23-W36-ZBJh68o);
 
 // Sadə test komandası
 bot.command("start", (ctx) => ctx.reply("Brat, sistem aktivdir ✅"));
