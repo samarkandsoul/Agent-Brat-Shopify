@@ -1,47 +1,66 @@
 // ZBS Healthcheck Module
 // This module checks the health of core external services.
 
-// Check GitHub API availability
+const fetch = require("node-fetch");
+
+// -----------------------------
+// GitHub API Check
+// -----------------------------
 async function checkGitHub() {
     try {
-        // TODO: Add GitHub API request
+        const response = await fetch("https://api.github.com", {
+            headers: { "User-Agent": "ZBS-System" }
+        });
+
+        if (!response.ok) {
+            throw new Error(`GitHub API responded with: ${response.status}`);
+        }
+
         return { service: "GitHub", status: "OK" };
     } catch (error) {
         return { service: "GitHub", status: "ERROR", error: error.message };
     }
 }
 
-// Check Render API availability
+// -----------------------------
+// Render API Check (placeholder for now)
+// -----------------------------
 async function checkRender() {
     try {
-        // TODO: Add Render API request
+        // TODO: Add Render API endpoint later
         return { service: "Render", status: "OK" };
     } catch (error) {
         return { service: "Render", status: "ERROR", error: error.message };
     }
 }
 
-// Check Google Drive connection
+// -----------------------------
+// Google Drive API Check (placeholder for now)
+// -----------------------------
 async function checkGoogle() {
     try {
-        // TODO: Add Google Drive API request
+        // TODO: Add Google Drive API request later
         return { service: "Google Drive", status: "OK" };
     } catch (error) {
         return { service: "Google Drive", status: "ERROR", error: error.message };
     }
 }
 
-// Check Telegram Webhook
+// -----------------------------
+// Telegram Bot API Check (placeholder for now)
+// -----------------------------
 async function checkTelegram() {
     try {
-        // TODO: Add Telegram API request
+        // TODO: Add Telegram API request later
         return { service: "Telegram", status: "OK" };
     } catch (error) {
         return { service: "Telegram", status: "ERROR", error: error.message };
     }
 }
 
+// -----------------------------
 // Main healthcheck runner
+// -----------------------------
 async function runHealthcheck() {
     const results = [];
 
