@@ -4,33 +4,57 @@ const TelegramBot = require("node-telegram-bot-api");
 const app = express();
 const port = process.env.PORT || 8080;
 
+// ========================
+// CONFIG
+// ========================
 const botToken = "8490375470:AAGpuHaX37fEKmpEU--Kx23-W36-ZBJh68o";
 const adminChatId = 8582609346;
 
+// ========================
+// TELEGRAM BOT
+// ========================
 const bot = new TelegramBot(botToken, { polling: false });
+
 app.use(express.json());
 
+// Telegram webhook route
 app.post("/telegram/webhook", (req, res) => {
-  bot.processUpdate(req.body);
-  res.sendStatus(200);
+    bot.processUpdate(req.body);
+    res.sendStatus(200);
 });
 
+// /start command
 bot.onText(/\/start/, (msg) => {
-  bot.sendMessage(msg.chat.id, "🧠 Brat sistem aktivdir ✅ — komandaları gözləyirəm.");
+    bot.sendMessage(
+        msg.chat.id,
+        "🧠 Brat sistem aktivdir ✅ — komandaları gözləyirəm."
+    );
 });
 
+// All text messages
 bot.on("message", async (msg) => {
-  const chatId = msg.chat.id;
-  const text = (msg.text || "").trim();
+    const chatId = msg.chat.id;
+    const text = (msg.text || "").trim();
 
-  if (!text || text.startsWith("/")) return;
+    if (!text || text.startsWith("/")) return;
 
-  if (text.toLowerCase().includes("drive")) {
-    await bot.sendMessage(chatId, "📁 Drive əməliyyatı başlayır...");
-  } else {
-    await bot.sendMessage(chatId, "Səni eşidirəm, Zahid Brat 👂");
-  }
+    if (text.toLowerCase().includes("drive")) {
+        await bot.sendMessage(chatId, "📁 Drive əməliyyatı başlayır...");
+    } else {
+        await bot.sendMessage(chatId, "Səni eşidirəm, Zahid Brat 👂");
+    }
 });
 
-app.get("/", (_req, res) => res.send("Agent Brat işləyir ✅"));
-app.listen(port, () => console.log(`Server running on port ${port}`));
+// ========================
+// HOME PAGE
+// ========================
+app.get("/", (_req, res) => {
+    res.send("Agent Brat işləyir ✅");
+});
+
+// ========================
+// START SERVER
+// ========================
+app.listen(port, () =>
+    console.log(`✅ Server running on port ${port}`)
+);
