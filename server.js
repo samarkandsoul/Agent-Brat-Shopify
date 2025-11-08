@@ -43,3 +43,21 @@ app.post("/services/:id/deploy", async (req, res) => {
 });
 
 app.listen(3000, () => console.log("AgentBrat API running on port 3000"));￼Enter
+import express from "express";
+import { controller } from "./src/agent-controller/controller.js";
+
+const app = express();
+app.use(express.json());
+
+app.post("/agent-controller", async (req, res) => {
+  try {
+    const result = await controller(req.body);
+    res.send(result);
+  } catch (e) {
+    res.status(500).send({ error: e.message });
+  }
+});
+
+app.listen(3000, () => {
+  console.log("Agent Controller is running");
+});
